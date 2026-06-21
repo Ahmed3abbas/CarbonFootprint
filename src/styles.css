@@ -37,17 +37,21 @@ main {
 }
 
 .shell {
-  width: min(1120px, calc(100% - 32px));
+  width: min(1160px, calc(100% - 32px));
   margin: 0 auto;
   padding: 32px 0 48px;
 }
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.95fr);
   gap: 24px;
   align-items: stretch;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+}
+
+.hero-copy-block {
+  padding-right: 12px;
 }
 
 .eyebrow {
@@ -73,23 +77,25 @@ h1 {
 }
 
 .summary-card,
-.panel {
+.panel,
+.stat-card,
+.scenario-card {
   border: 1px solid rgba(16, 33, 26, 0.1);
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.74);
   backdrop-filter: blur(14px);
   box-shadow: 0 18px 45px rgba(16, 33, 26, 0.08);
 }
 
 .summary-card {
   padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  gap: 14px;
 }
 
 .summary-label,
-.panel-header p {
+.panel-header p,
+.stat-label {
   margin: 0;
   color: #4b6658;
 }
@@ -97,7 +103,7 @@ h1 {
 .summary-value {
   font-size: clamp(2.4rem, 6vw, 4.8rem);
   font-weight: 800;
-  margin: 14px 0;
+  margin: 0;
 }
 
 .summary-note {
@@ -105,9 +111,74 @@ h1 {
   color: #254232;
 }
 
+.progress-block {
+  display: grid;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(16, 33, 26, 0.08);
+}
+
+.progress-copy,
+.bar-copy,
+.field-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.progress-copy strong,
+.bar-copy strong,
+.field-value,
+.stat-card strong,
+.scenario-card strong {
+  color: #10211a;
+}
+
+.progress-track {
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(45, 122, 82, 0.12);
+  overflow: hidden;
+}
+
+.progress-fill,
+.bar-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2d7a52, #5ab784);
+}
+
+.progress-caption,
+.field-help,
+.bar-note,
+.scenario-card small {
+  margin: 0;
+  color: #577163;
+  font-size: 0.93rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  padding: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.stat-card p,
+.scenario-card p {
+  margin: 0;
+  color: #355042;
+}
+
 .layout {
   display: grid;
-  grid-template-columns: minmax(280px, 0.88fr) minmax(0, 1.12fr);
+  grid-template-columns: minmax(300px, 0.88fr) minmax(0, 1.12fr);
   gap: 24px;
 }
 
@@ -132,19 +203,23 @@ h1 {
   gap: 14px;
 }
 
-label {
+.field-group {
   display: grid;
   gap: 8px;
+}
+
+label {
   color: #173127;
   font-weight: 600;
 }
 
 input[type='number'],
 select {
+  width: 100%;
   border: 1px solid rgba(23, 49, 39, 0.16);
   border-radius: 14px;
   padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.94);
   color: #10211a;
 }
 
@@ -153,15 +228,9 @@ input[type='range'] {
   accent-color: #2d7a52;
 }
 
-.range-value {
-  font-size: 0.92rem;
-  color: #4b6658;
-  font-weight: 500;
-}
-
 .insights {
   display: grid;
-  gap: 20px;
+  gap: 22px;
 }
 
 .bars {
@@ -171,6 +240,7 @@ input[type='range'] {
 
 .bar-row {
   display: grid;
+  font-weight: 600;
   gap: 8px;
 }
 
@@ -189,12 +259,6 @@ input[type='range'] {
   border-radius: 999px;
   background: rgba(45, 122, 82, 0.12);
   overflow: hidden;
-}
-
-.bar-fill {
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #2d7a52, #5ab784);
 }
 
 .recommendations ul {
@@ -217,13 +281,32 @@ input[type='range'] {
   color: #163024;
 }
 
+.recommendations em {
+  color: #345447;
+  font-style: normal;
+}
+
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.scenario-card {
+  padding: 16px;
+  display: grid;
+  gap: 8px;
+}
+
 .recommendations span {
   color: #395445;
 }
 
 @media (max-width: 880px) {
   .hero,
-  .layout {
+  .layout,
+  .stats-grid,
+  .scenario-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -235,7 +318,9 @@ input[type='range'] {
   }
 
   .summary-card,
-  .panel {
+  .panel,
+  .stat-card,
+  .scenario-card {
     padding: 18px;
     border-radius: 20px;
   }
